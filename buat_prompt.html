@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Buat Prompt</title>
+    <!-- 1. Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 2. Memuat font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 3. Ikon (SVG di bawah) -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style kustom untuk select box agar terlihat senada */
+        select, textarea, input[type="text"] {
+            color: white;
+            background-color: #374151; /* bg-gray-700 */
+        }
+        select option {
+            background: #374151;
+            color: white;
+        }
+        /* Menyembunyikan pesan notifikasi */
+        #notification {
+            display: none;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white antialiased">
+
+    <!-- Kontainer Utama -->
+    <div class="flex items-center justify-center min-h-screen p-4">
+        
+        <div class="w-full max-w-3xl bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-2xl">
+
+            <!-- Header -->
+            <h1 class="text-3xl font-bold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                AI Prompt Builder
+            </h1>
+            <p class="text-center text-gray-400 mb-6">
+                Isi kolom di bawah, atau biarkan AI mengisi otomatis untuk Anda.
+            </p>
+
+            <!-- =================================== -->
+            <!-- == FITUR BARU: GEMINI API == -->
+            <!-- =================================== -->
+            <div class="space-y-3 mb-8 border-b border-gray-700 pb-8">
+                <label for="natural-input" class="block text-sm font-medium text-gray-300">
+                    Mulai di sini: Jelaskan ide Anda (dalam Bahasa Indonesia)
+                </label>
+                <textarea id="natural-input" rows="3" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: seorang astronot melayang di angkasa, melihat galaksi yang berwarna-warni"></textarea>
+                <button type="button" id="gemini-fill-btn" class="w-full flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 transition-all duration-300">
+                    <span id="gemini-btn-text">✨ Isi Otomatis dengan AI</span>
+                    <!-- Indikator Loading (Tersembunyi) -->
+                    <svg id="gemini-loader" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+                <p id="gemini-error" class="text-red-400 text-sm mt-2 text-center"></p>
+            </div>
+
+
+            <!-- Form Pembangun Prompt -->
+            <form id="prompt-form" class="space-y-4">
+
+                <!-- Subjek Utama -->
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">1. Subjek Utama</label>
+                    <textarea id="subject" rows="2" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: seekor naga perkasa, seorang wanita cyberpunk, sebuah logo untuk kedai kopi"></textarea>
+                </div>
+
+                <!-- Detail & Aksi -->
+                <div>
+                    <label for="details" class="block text-sm font-medium text-gray-300 mb-2">2. Aksi, Detail, atau Latar Belakang</label>
+                    <textarea id="details" rows="3" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: terbang di atas kastil, memegang pedang neon, di tengah hutan berkabut, mengenakan jaket kulit"></textarea>
+                </div>
+
+                <!-- Opsi Gaya & Teknis -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Gaya Visual -->
+                    <div>
+                        <label for="style" class="block text-sm font-medium text-gray-300 mb-2">3. Gaya Visual</label>
+                        <select id="style" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="">(Pilih Gaya)</option>
+                            <option value="photorealistic">Photorealistic</option>
+                            <option value="digital art">Digital Art</option>
+                            <option value="3d render">3D Render</option>
+                            <option value="anime style">Anime / Manga</option>
+                            <option value="cinematic">Cinematic</option>
+                            <option value="watercolor painting">Watercolor (Cat Air)</option>
+                            <option value="minimalist logo">Minimalist Logo</option>
+                            <option value="cyberpunk">Cyberpunk</option>
+                            <option value="fantasy art">Fantasy Art</option>
+                            <option value="pixel art">Pixel Art</option>
+                        </select>
+                    </div>
+
+                    <!-- Sudut Kamera (BARU) -->
+                    <div>
+                        <label for="camera" class="block text-sm font-medium text-gray-300 mb-2">4. Sudut Kamera</label>
+                        <select id="camera" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="">(Pilih Sudut)</option>
+                            <option value="close-up shot">Close-up</option>
+                            <option value="medium shot">Medium Shot</option>
+                            <option value="full body shot">Full Body Shot</option>
+                            <option value="low-angle shot">Low Angle (Dari Bawah)</option>
+                            <option value="high-angle shot">High Angle (Dari Atas)</option>
+                            <option value="drone shot">Drone Shot (Aerial)</option>
+                        </select>
+                    </div>
+
+                    <!-- Pencahayaan / Mood -->
+                    <div>
+                        <label for="lighting" class="block text-sm font-medium text-gray-300 mb-2">5. Pencahayaan</label>
+                        <select id="lighting" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="">(Pilih Cahaya)</option>
+                            <option value="natural lighting">Natural Lighting (Alami)</option>
+                            <option value="cinematic lighting">Cinematic Lighting</option>
+                            <option value="golden hour">Golden Hour (Sore Hari)</option>
+                            <option value="studio light">Studio Light</option>
+                            <option value="neon lighting">Neon</option>
+                            <option value="dark and moody">Dark & Moody</option>
+                            <option value="bright and vibrant">Bright & Vibrant</option>
+                        </select>
+                    </div>
+
+                    <!-- Rasio Aspek -->
+                    <div>
+                        <label for="ratio" class="block text-sm font-medium text-gray-300 mb-2">6. Rasio Aspek</label>
+                        <select id="ratio" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="">(Pilih Rasio)</option>
+                            <option value="3:4 aspect ratio">3:4 (Potret)</option>
+                            <option value="9:16 aspect ratio">9:16 (Vertikal / Story)</option>
+                            <option value="16:9 aspect ratio">16:9 (Landscape / Widescreen)</option>
+                            <option value="1:1 aspect ratio">1:1 (Persegi / Square)</option>
+                            <option value="4:3 aspect ratio">4:3 (Standard)</option>
+                            <option value="3:2 aspect ratio">3:2 (Fotografi)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Kata Kunci Tambahan -->
+                <div>
+                    <label for="keywords" class="block text-sm font-medium text-gray-300 mb-2">7. Kata Kunci Tambahan (Opsional)</label>
+                    <input type="text" id="keywords" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: ultra realistic, 8k, detailed face, sharp focus">
+                </div>
+
+                <!-- Negative Prompt (BARU) -->
+                <div>
+                    <label for="negative" class="block text-sm font-medium text-gray-300 mb-2">8. Negative Prompt (Hal yang dihindari)</label>
+                    <textarea id="negative" rows="2" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: ugly, blurry, extra fingers, bad anatomy, text, watermark"></textarea>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="flex items-center space-x-4 pt-4">
+                    <button type="button" id="generate-btn" class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all duration-300">
+                        Rakit Prompt
+                    </button>
+                    <button type="button" id="clear-btn" class="px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition-all duration-300">
+                        Bersihkan
+                    </button>
+                </div>
+            </form>
+
+            <!-- Area Output -->
+            <div class="mt-6">
+                <label for="output-prompt" class="block text-sm font-medium text-gray-300 mb-2">
+                    Hasil Prompt (Siap Salin):
+                </label>
+                <div class="relative">
+                    <textarea id="output-prompt" rows="5" readonly class="w-full p-3 pr-12 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-500" placeholder="Prompt Anda yang sudah jadi akan muncul di sini..."></textarea>
+                    <button id="copy-btn" class="absolute top-3 right-3 p-2 bg-gray-700 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400" title="Salin ke Clipboard">
+                        <!-- Ikon 'Copy' dari Lucide -->
+                        <svg id="copy-icon" class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <!-- Ikon 'Check' (tersembunyi) -->
+                        <svg id="check-icon" class="w-5 h-5 text-green-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notifikasi "Tersalin!" -->
+            <div id="notification" class="fixed top-10 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg opacity-0">
+                Prompt berhasil disalin!
+            </div>
+            
+        </div>
+    </div>
+
+    <script type="module">
+        // --- Kunci API (Biarkan kosong, akan diisi otomatis di lingkungan aman) ---
+        const apiKey = ""; // PENTING: Jangan masukkan kunci API rahasia di sini jika file ini publik.
+
+        // --- Referensi Elemen DOM ---
+        const subject = document.getElementById('subject');
+        const details = document.getElementById('details');
+        const style = document.getElementById('style');
+        const camera = document.getElementById('camera'); // BARU
+        const lighting = document.getElementById('lighting');
+        const ratio = document.getElementById('ratio');
+        const keywords = document.getElementById('keywords');
+        const negative = document.getElementById('negative'); // BARU
+        
+        const generateBtn = document.getElementById('generate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        
+        const outputPrompt = document.getElementById('output-prompt');
+        const notification = document.getElementById('notification');
+        const copyIcon = document.getElementById('copy-icon');
+        const checkIcon = document.getElementById('check-icon');
+        
+        const promptForm = document.getElementById('prompt-form');
+
+        // --- Referensi Elemen DOM (BARU untuk Gemini) ---
+        const naturalInput = document.getElementById('natural-input');
+        const geminiFillBtn = document.getElementById('gemini-fill-btn');
+        const geminiBtnText = document.getElementById('gemini-btn-text');
+        const geminiLoader = document.getElementById('gemini-loader');
+        const geminiError = document.getElementById('gemini-error');
+
+
+        // --- Event Listeners ---
+        generateBtn.addEventListener('click', buildPrompt);
+        clearBtn.addEventListener('click', clearForm);
+        copyBtn.addEventListener('click', copyToClipboard);
+
+        // --- Event Listener (BARU untuk Gemini) ---
+        geminiFillBtn.addEventListener('click', handleGeminiFill);
+
+
+        // ===========================================
+        // == FUNGSI BARU: PANGGILAN GEMINI API ==
+        // ===========================================
+
+        /**
+         * Fungsi untuk memanggil API dengan exponential backoff
+         */
+        async function fetchWithExponentialBackoff(url, options, maxRetries = 5, baseDelay = 1000) {
+            let delay = baseDelay;
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.ok) {
+                        return await response.json();
+                    } else if (response.status === 429 || response.status >= 500) {
+                        // Throttling or server error, retry
+                        console.warn(`Attempt ${i + 1} failed with status ${response.status}. Retrying in ${delay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                    } else {
+                        // Other client-side error, don't retry
+                        throw new Error(`API request failed with status ${response.status}: ${await response.text()}`);
+                    }
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error; // Rethrow last error
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+            throw new Error('Max retries reached');
+        }
+
+        /**
+         * Menangani klik tombol "Isi Otomatis dengan AI"
+         */
+        async function handleGeminiFill() {
+            const userInput = naturalInput.value;
+            if (!userInput) {
+                geminiError.textContent = "Harap masukkan ide Anda di kotak teks di atas.";
+                return;
+            }
+
+            // Tampilkan UI loading
+            geminiError.textContent = "";
+            geminiLoader.classList.remove('hidden');
+            geminiBtnText.classList.add('hidden');
+            geminiFillBtn.disabled = true;
+
+            // Definisikan System Prompt untuk AI
+            const systemPrompt = `You are an expert prompt engineer for text-to-image AI models. The user will provide a simple idea in Indonesian. Your job is to:
+1.  Translate and expand this idea into a highly creative and descriptive prompt in ENGLISH.
+2.  Fill in the provided JSON schema with appropriate, descriptive English terms.
+3.  Be creative and invent fitting details (camera angles, lighting, styles) if the user doesn't specify them.
+4.  The "subject" should be the main focus.
+5.  The "details" should describe the action, background, and atmosphere.
+6.  The "keywords" should be comma-separated technical terms to enhance quality.
+7.  The "negative" prompt should include common things to avoid.`;
+
+            // Definisikan Skema JSON (sangat penting!)
+            // Ini memaksa AI untuk mengembalikan data dalam format yang kita inginkan.
+            const schema = {
+                type: "OBJECT",
+                properties: {
+                    "subject": { "type": "STRING", "description": "The main subject of the image (e.g., 'a majestic dragon', 'a cyberpunk woman')." },
+                    "details": { "type": "STRING", "description": "The background, action, and atmosphere (e.g., 'flying over a misty forest', 'standing on a rain-slicked neon street')." },
+                    "style": { 
+                        "type": "STRING", 
+                        "description": "The visual style.",
+                        "enum": ["photorealistic", "digital art", "3d render", "anime style", "cinematic", "watercolor painting", "minimalist logo", "cyberpunk", "fantasy art", "pixel art"]
+                    },
+                    "camera": {
+                        "type": "STRING",
+                        "description": "The camera angle or shot type.",
+                        "enum": ["close-up shot", "medium shot", "full body shot", "low-angle shot", "high-angle shot", "drone shot"]
+                    },
+                    "lighting": {
+                        "type": "STRING",
+                        "description": "The lighting style.",
+                        "enum": ["natural lighting", "cinematic lighting", "golden hour", "studio light", "neon lighting", "dark and moody", "bright and vibrant"]
+                    },
+                    "keywords": { "type": "STRING", "description": "Comma-separated keywords for quality (e.g., 'ultra realistic, 8k, sharp focus')." },
+                    "negative": { "type": "STRING", "description": "Comma-separated keywords to avoid (e.g., 'blurry, ugly, bad anatomy, extra limbs')." }
+                },
+                required: ["subject", "details", "style", "camera", "lighting", "keywords", "negative"]
+            };
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userInput }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema
+                }
+            };
+
+            try {
+                const result = await fetchWithExponentialBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (result.candidates && result.candidates.length > 0) {
+                    const jsonText = result.candidates[0].content.parts[0].text;
+                    const data = JSON.parse(jsonText);
+
+                    // Isi semua kolom formulir!
+                    subject.value = data.subject || '';
+                    details.value = data.details || '';
+                    style.value = data.style || '';
+                    camera.value = data.camera || '';
+                    lighting.value = data.lighting || '';
+                    keywords.value = data.keywords || '';
+                    negative.value = data.negative || '';
+
+                    // Hasilkan prompt di output juga
+                    buildPrompt();
+
+                } else {
+                    throw new Error("Respon AI tidak valid atau kosong.");
+                }
+
+            } catch (error) {
+                console.error('Gemini API Error:', error);
+                geminiError.textContent = `Error: ${error.message}. (Pastikan API key Anda valid jika menjalankan ini di luar lingkungan Canvas.)`;
+            } finally {
+                // Kembalikan UI ke normal
+                geminiLoader.classList.add('hidden');
+                geminiBtnText.classList.remove('hidden');
+                geminiFillBtn.disabled = false;
+            }
+        }
+
+
+        // ===========================================
+        // == FUNGSI YANG SUDAH ADA (DENGAN PERBAIKAN) ==
+        // ===========================================
+
+        /**
+         * Fungsi utama untuk merakit prompt
+         */
+        function buildPrompt() {
+            // 1. Validasi: Pastikan subjek diisi
+            if (!subject.value) {
+                outputPrompt.value = "Error: Kolom 'Subjek Utama' tidak boleh kosong.";
+                outputPrompt.classList.add('text-red-400');
+                return;
+            }
+            outputPrompt.classList.remove('text-red-400');
+
+            // 2. Kumpulkan semua bagian positif
+            const parts = [
+                style.value, 
+                subject.value, 
+                details.value, 
+                camera.value, 
+                lighting.value, 
+                keywords.value, 
+                ratio.value, 
+                // Hapus kata kunci "sakti" default, karena AI sekarang memberikannya
+            ];
+
+            // 3. Gabungkan menjadi satu string
+            let finalPrompt = parts.filter(Boolean).join(', ');
+
+            // 4. Tambahkan negative prompt (jika ada) sebagai instruksi natural
+            if (negative.value) {
+                if (finalPrompt.length > 0) {
+                    finalPrompt += '. ';
+                }
+                // Gunakan format bahasa alami yang lebih baik
+                finalPrompt += `Negative prompt: avoid ${negative.value}.`;
+            }
+
+            // 5. Tampilkan di output
+            outputPrompt.value = finalPrompt;
+            
+            // Reset ikon copy
+            copyIcon.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+        }
+
+        /**
+         * Membersihkan semua input dan output
+         */
+        function clearForm() {
+            promptForm.reset(); // Ini akan me-reset semua field di dalam form
+            naturalInput.value = ""; // Bersihkan juga input AI
+            outputPrompt.value = "";
+            geminiError.textContent = "";
+            outputPrompt.classList.remove('text-red-400');
+            copyIcon.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+        }
+
+        /**
+         * Menyalin teks dari output ke clipboard
+         */
+        function copyToClipboard() {
+            const textToCopy = outputPrompt.value;
+            if (!textToCopy) return; // Jangan lakukan apa-apa jika kosong
+
+            // Teknik untuk menyalin ke clipboard
+            // Ini berfungsi baik di dalam iframe
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            try {
+                document.execCommand('copy');
+                
+                // Tampilkan notifikasi
+                showNotification();
+
+                // Ganti ikon
+                copyIcon.classList.add('hidden');
+                checkIcon.classList.remove('hidden');
+
+            } catch (err) {
+                console.error('Gagal menyalin ke clipboard:', err);
+            }
+            document.body.removeChild(tempTextArea);
+        }
+
+        /**
+         * Menampilkan notifikasi "Tersalin!"
+         */
+        function showNotification() {
+            notification.style.display = 'block';
+            notification.style.opacity = '1';
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 500); // Waktu untuk fade out
+            }, 2000); // Tampilkan selama 2 detik
+        }
+    </script>
+</body>
+</html>
+
