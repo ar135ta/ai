@@ -38,35 +38,23 @@
                 AI Buat Prompt
             </h1>
             <p class="text-center text-gray-400 mb-6">
-                Isi kolom di bawah, atau biarkan AI mengisi otomatis untuk Anda.
+                Isi kolom di bawah untuk merakit prompt Anda.
             </p>
 
-            <!-- =================================== --><!-- == FITUR BARU: GEMINI API == --><!-- =================================== --><div class="space-y-3 mb-8 border-b border-gray-700 pb-8">
-                <label for="natural-input" class="block text-sm font-medium text-gray-300">
-                    Mulai di sini: Jelaskan ide Anda (dalam Bahasa Indonesia)
-                </label>
-                <textarea id="natural-input" rows="3" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: seorang astronot melayang di angkasa, melihat galaksi yang berwarna-warni"></textarea>
-                <button type="button" id="gemini-fill-btn" class="w-full flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 transition-all duration-300">
-                    <span id="gemini-btn-text">✨ Isi Otomatis dengan AI</span>
-                    <!-- Indikator Loading (Tersembunyi) --><svg id="gemini-loader" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                </button>
-                <p id="gemini-error" class="text-red-400 text-sm mt-2 text-center"></p>
-            </div>
-
+            <!-- =================================== -->
+            <!-- == FITUR API TELAH DIHAPUS == -->
+            <!-- =================================== -->
 
             <!-- Form Pembangun Prompt --><form id="prompt-form" class="space-y-4">
 
                 <!-- Subjek Utama --><div>
                     <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">1. Subjek Utama</label>
-                    <textarea id="subject" rows="2" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: seekor naga perkasa, seorang wanita cyberpunk, sebuah logo untuk kedai kopi"></textarea>
+                    <textarea id="subject" rows="2" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: a mighty dragon, seorang wanita cyberpunk, sebuah logo untuk kedai kopi"></textarea>
                 </div>
 
                 <!-- Detail & Aksi --><div>
-                    <label for="details" class="block text-sm font-medium text-gray-300 mb-2">2. Aksi, Detail, atau Latar Belakang</label>
-                    <textarea id="details" rows="3" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: terbang di atas kastil, memegang pedang neon, di tengah hutan berkabut, mengenakan jaket kulit"></textarea>
+                    <label for="details" class="block text-sm font-medium text-gray-300 mb-2">2. Aksi, Detail, Latar Belakang</label>
+                    <textarea id="details" rows="3" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: flying over a castle, memegang pedang neon, di tengah hutan berkabut"></textarea>
                 </div>
 
                 <!-- Opsi Gaya & Teknis --><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -87,7 +75,7 @@
                         </select>
                     </div>
 
-                    <!-- Sudut Kamera (BARU) --><div>
+                    <!-- Sudut Kamera --><div>
                         <label for="camera" class="block text-sm font-medium text-gray-300 mb-2">4. Sudut Kamera</label>
                         <select id="camera" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             <option value="">(Pilih Sudut)</option>
@@ -131,9 +119,9 @@
                     </div>
                 </div>
 
-                <!-- Bentuk Ukuran Tubuh (BARU) --><div>
-                    <label for="body_type" class="block text-sm font-medium text-gray-300 mb-2">7. Bentuk Ukuran Tubuh (Opsional)</label>
-                    <input type="text" id="body_type" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: athletic, slim, curvy, muscular, petite, tall, stocky">
+                <!-- Bentuk Ukuran Tubuh --><div>
+                    <label for="body_type" class="block text-sm font-medium text-gray-300 mb-2">7. Bentuk Tubuh (Opsional)</label>
+                    <input type="text" id="body_type" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: athletic, slim, curvy, muscular, petite, tall">
                 </div>
 
                 <!-- Kata Kunci Tambahan --><div>
@@ -141,18 +129,18 @@
                     <input type="text" id="keywords" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: ultra realistic, 8k, detailed face, sharp focus">
                 </div>
 
-                <!-- Negative Prompt (BARU) --><div>
-                    <label for="negative" class="block text-sm font-medium text-gray-300 mb-2">9. Negative Prompt (Hal yang dihindari)</label>
+                <!-- Negative Prompt --><div>
+                    <label for="negative" class="block text-sm font-medium text-gray-300 mb-2">9. Negative Prompt (Opsional)</label>
                     <textarea id="negative" rows="2" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400" placeholder="Contoh: ugly, blurry, extra fingers, bad anatomy, text, watermark"></textarea>
                 </div>
+
+                <!-- Catatan Bahasa (BARU) --><p class="text-xs text-gray-400 text-center italic pt-2">
+                    Catatan: Untuk mendapat hasil Prompt dalam Bahasa Inggris, gunakan Bahasa Inggris saat mengisi. Jika menggunakan Bahasa Indonesia, hasilnya tinggal Anda terjemahkan secara online. by @KadalTV
+                </p>
 
                 <!-- Tombol Aksi --><div class="flex items-center space-x-4 pt-4">
                     <button type="button" id="generate-btn" class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all duration-300 flex items-center justify-center">
                         <span id="generate-btn-text">Rakit Prompt</span>
-                        <!-- Indikator Loading (Tersembunyi) --><svg id="generate-loader" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
                     </button>
                     <button type="button" id="clear-btn" class="px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition-all duration-300">
                         Bersihkan
@@ -165,7 +153,7 @@
                     Hasil Prompt (Siap Salin):
                 </label>
                 <div class="relative">
-                    <textarea id="output-prompt" rows="10" readonly class="w-full p-3 pr-12 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-500" placeholder="Prompt Anda yang sudah jadi akan muncul di sini..."></textarea>
+                    <textarea id="output-prompt" rows="5" readonly class="w-full p-3 pr-12 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-500" placeholder="Prompt Anda yang sudah jadi akan muncul di sini..."></textarea>
                     <button id="copy-btn" class="absolute top-3 right-3 p-2 bg-gray-700 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400" title="Salin ke Clipboard">
                         <!-- Ikon 'Copy' dari Lucide --><svg id="copy-icon" class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         <!-- Ikon 'Check' (tersembunyi) --><svg id="check-icon" class="w-5 h-5 text-green-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -176,18 +164,11 @@
             <!-- Notifikasi "Tersalin!" --><div id="notification" class="fixed top-10 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg opacity-0">
                 Prompt berhasil disalin!
             </div>
-        <p class="info-text">
-            Struktur prompt ini dirancang untuk Gemini AI. Eksperimen dengan berbagai kombinasi untuk hasil terbaik!
-            Prompt Bahasa Inggris adalah terjemahan otomatis dan mungkin memerlukan penyesuaian. @KadalTV
-        </p>
             
         </div>
     </div>
 
     <script type="module">
-        // --- Kunci API (Biarkan kosong, akan diisi otomatis di lingkungan aman) ---
-        const apiKey = ""; // PENTING: Jangan masukkan kunci API rahasia di sini jika file ini publik.
-
         // --- Referensi Elemen DOM ---
         const subject = document.getElementById('subject');
         const details = document.getElementById('details');
@@ -195,13 +176,11 @@
         const camera = document.getElementById('camera');
         const lighting = document.getElementById('lighting');
         const ratio = document.getElementById('ratio');
-        const bodyType = document.getElementById('body_type'); // BARU
+        const bodyType = document.getElementById('body_type');
         const keywords = document.getElementById('keywords');
         const negative = document.getElementById('negative');
         
         const generateBtn = document.getElementById('generate-btn');
-        const generateBtnText = document.getElementById('generate-btn-text'); // BARU
-        const generateLoader = document.getElementById('generate-loader'); // BARU
         const clearBtn = document.getElementById('clear-btn');
         const copyBtn = document.getElementById('copy-btn');
         
@@ -212,170 +191,19 @@
         
         const promptForm = document.getElementById('prompt-form');
 
-        // --- Referensi Elemen DOM (Untuk Gemini) ---
-        const naturalInput = document.getElementById('natural-input');
-        const geminiFillBtn = document.getElementById('gemini-fill-btn');
-        const geminiBtnText = document.getElementById('gemini-btn-text');
-        const geminiLoader = document.getElementById('gemini-loader');
-        const geminiError = document.getElementById('gemini-error');
-
-
         // --- Event Listeners ---
         generateBtn.addEventListener('click', buildPrompt);
         clearBtn.addEventListener('click', clearForm);
         copyBtn.addEventListener('click', copyToClipboard);
-        geminiFillBtn.addEventListener('click', handleGeminiFill);
-
 
         // ===========================================
-        // == FUNGSI BARU: PANGGILAN GEMINI API ==
+        // == FUNGSI INTI (OFFLINE) ==
         // ===========================================
 
         /**
-         * Fungsi untuk memanggil API dengan exponential backoff
+         * Fungsi utama untuk merakit prompt (Sekarang 100% Offline)
          */
-        async function fetchWithExponentialBackoff(url, options, maxRetries = 5, baseDelay = 1000) {
-            let delay = baseDelay;
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.ok) {
-                        return await response.json();
-                    } else if (response.status === 429 || response.status >= 500) {
-                        // Throttling or server error, retry
-                        console.warn(`Attempt ${i + 1} failed with status ${response.status}. Retrying in ${delay}ms...`);
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2; // Exponential backoff
-                    } else {
-                        // Other client-side error, don't retry
-                        throw new Error(`API request failed with status ${response.status}: ${await response.text()}`);
-                    }
-                } catch (error) {
-                    if (i === maxRetries - 1) throw error; // Rethrow last error
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2;
-                }
-            }
-            throw new Error('Max retries reached');
-        }
-
-        /**
-         * Menangani klik tombol "Isi Otomatis dengan AI"
-         */
-        async function handleGeminiFill() {
-            const userInput = naturalInput.value;
-            if (!userInput) {
-                geminiError.textContent = "Harap masukkan ide Anda di kotak teks di atas.";
-                return;
-            }
-
-            // Tampilkan UI loading
-            geminiError.textContent = "";
-            geminiLoader.classList.remove('hidden');
-            geminiBtnText.classList.add('hidden');
-            geminiFillBtn.disabled = true;
-
-            // Definisikan System Prompt untuk AI
-            const systemPrompt = `You are an expert prompt engineer for text-to-image AI models. The user will provide a simple idea in Indonesian. Your job is to:
-1.  Translate and expand this idea into a highly creative and descriptive prompt in ENGLISH.
-2.  Fill in the provided JSON schema with appropriate, descriptive English terms.
-3.  Be creative and invent fitting details (camera angles, lighting, styles, body types) if the user doesn't specify them.
-4.  The "subject" should be the main focus.
-5.  The "details" should describe the action, background, and atmosphere.
-6.  The "body_type" should describe the general physique of the subject, if applicable (e.g., 'athletic', 'slim', 'curvy').
-7.  The "keywords" should be comma-separated technical terms to enhance quality.
-8.  The "negative" prompt should include common things to avoid.`;
-
-            // Definisikan Skema JSON (sangat penting!)
-            // Ini memaksa AI untuk mengembalikan data dalam format yang kita inginkan.
-            const schema = {
-                type: "OBJECT",
-                properties: {
-                    "subject": { "type": "STRING", "description": "The main subject of the image (e.g., 'a majestic dragon', 'a cyberpunk woman')." },
-                    "details": { "type": "STRING", "description": "The background, action, and atmosphere (e.g., 'flying over a misty forest', 'standing on a rain-slicked neon street')." },
-                    "style": { 
-                        "type": "STRING", 
-                        "description": "The visual style.",
-                        "enum": ["photorealistic", "digital art", "3d render", "anime style", "cinematic", "watercolor painting", "minimalist logo", "cyberpunk", "fantasy art", "pixel art"]
-                    },
-                    "camera": {
-                        "type": "STRING",
-                        "description": "The camera angle or shot type.",
-                        "enum": ["close-up shot", "medium shot", "full body shot", "low-angle shot", "high-angle shot", "drone shot"]
-                    },
-                    "lighting": {
-                        "type": "STRING",
-                        "description": "The lighting style.",
-                        "enum": ["natural lighting", "cinematic lighting", "golden hour", "studio light", "neon lighting", "dark and moody", "bright and vibrant"]
-                    },
-                    "body_type": { "type": "STRING", "description": "The general physique of the subject, if applicable (e.g., 'athletic', 'slim', 'curvy', 'muscular', 'petite', 'tall', 'stocky')." }, // BARU
-                    "keywords": { "type": "STRING", "description": "Comma-separated keywords for quality (e.g., 'ultra realistic, 8k, sharp focus')." },
-                    "negative": { "type": "STRING", "description": "Comma-separated keywords to avoid (e.g., 'blurry, ugly, bad anatomy, extra limbs')." }
-                },
-                required: ["subject", "details", "style", "camera", "lighting", "body_type", "keywords", "negative"] // body_type ditambahkan
-            };
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userInput }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: schema
-                }
-            };
-
-            try {
-                const result = await fetchWithExponentialBackoff(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (result.candidates && result.candidates.length > 0) {
-                    const jsonText = result.candidates[0].content.parts[0].text;
-                    const data = JSON.parse(jsonText);
-
-                    // Isi semua kolom formulir!
-                    subject.value = data.subject || '';
-                    details.value = data.details || '';
-                    style.value = data.style || '';
-                    camera.value = data.camera || '';
-                    lighting.value = data.lighting || '';
-                    bodyType.value = data.body_type || ''; // BARU
-                    keywords.value = data.keywords || '';
-                    negative.value = data.negative || '';
-
-                    // Hasilkan prompt di output juga
-                    buildPrompt();
-
-                } else {
-                    throw new Error("Respon AI tidak valid atau kosong.");
-                }
-
-            } catch (error) {
-                console.error('Gemini API Error:', error);
-                geminiError.textContent = `Error: ${error.message}. (Pastikan API key Anda valid jika menjalankan ini di luar lingkungan Canvas.)`;
-            } finally {
-                // Kembalikan UI ke normal
-                geminiLoader.classList.add('hidden');
-                geminiBtnText.classList.remove('hidden');
-                geminiFillBtn.disabled = false;
-            }
-        }
-
-
-        // ===========================================
-        // == FUNGSI YANG SUDAH ADA (DENGAN PERBAIKAN) ==
-        // ===========================================
-
-        /**
-         * Fungsi utama untuk merakit prompt (SEKARANG ASYNC)
-         */
-        async function buildPrompt() {
+        function buildPrompt() {
             // 1. Validasi: Pastikan subjek diisi
             if (!subject.value) {
                 outputPrompt.value = "Error: Kolom 'Subjek Utama' tidak boleh kosong.";
@@ -385,50 +213,32 @@
             outputPrompt.classList.remove('text-red-400');
             outputPrompt.value = ""; // Bersihkan output sebelumnya
 
-            // Tampilkan UI Loading pada tombol "Rakit Prompt"
-            generateBtnText.classList.add('hidden');
-            generateLoader.classList.remove('hidden');
-            generateBtn.disabled = true;
-            geminiError.textContent = ""; // Bersihkan error lama
-
-            // 2. Kumpulkan semua bagian untuk prompt Bahasa Indonesia
-            // Di sini kita menggunakan .text dari dropdown untuk mendapatkan teks bahasa Indonesia
-            const partsId = [
-                style.options[style.selectedIndex].text.replace("(Pilih Gaya)", "").trim(),
+            // 2. Kumpulkan semua bagian (ini semua adalah 'value' B.Inggris dari dropdown)
+            const parts = [
+                style.value, 
                 subject.value, 
                 bodyType.value,
                 details.value, 
-                camera.options[camera.selectedIndex].text.replace("(Pilih Sudut)", "").trim(),
-                lighting.options[lighting.selectedIndex].text.replace("(Pilih Cahaya)", "").trim(),
+                camera.value, 
+                lighting.value, 
                 keywords.value, 
-                ratio.options[ratio.selectedIndex].text.replace("(Pilih Rasio)", "").trim(),
+                ratio.value, 
             ];
 
-            // 3. Gabungkan menjadi satu string (Versi Bahasa Indonesia)
-            let indonesianPrompt = partsId.filter(Boolean).join(', ');
+            // 3. Gabungkan menjadi satu string (Versi Bahasa Inggris)
+            let finalPrompt = parts.filter(Boolean).join(', ');
 
             // 4. Tambahkan negative prompt (jika ada)
             if (negative.value) {
-                indonesianPrompt += `. Hal yang dihindari: ${negative.value}.`;
+                if (finalPrompt.length > 0) {
+                    finalPrompt += '. ';
+                }
+                // Format bahasa Inggris yang dipahami AI
+                finalPrompt += `Negative prompt: avoid ${negative.value}.`;
             }
 
-            // 5. Panggil API untuk menerjemahkan ke Bahasa Inggris
-            try {
-                const englishPrompt = await translatePromptToEnglish(indonesianPrompt);
-
-                // 6. Tampilkan kedua versi di output
-                outputPrompt.value = `--- BAHASA INGGRIS (Untuk AI) ---\n${englishPrompt}\n\n--- BAHASA INDONESIA (Arsip) ---\n${indonesianPrompt}`;
-
-            } catch (error) {
-                console.error('Translation Error:', error);
-                geminiError.textContent = `Error saat menerjemahkan: ${error.message}`;
-                outputPrompt.value = `Gagal menerjemahkan. Prompt asli:\n${indonesianPrompt}`; // Tampilkan prompt asli jika gagal
-            } finally {
-                // Kembalikan UI tombol ke normal
-                generateBtnText.classList.remove('hidden');
-                generateLoader.classList.add('hidden');
-                generateBtn.disabled = false;
-            }
+            // 5. Tampilkan di output
+            outputPrompt.value = finalPrompt;
             
             // Reset ikon copy
             copyIcon.classList.remove('hidden');
@@ -436,51 +246,11 @@
         }
 
         /**
-         * FUNGSI BARU: Menerjemahkan prompt menggunakan Gemini API
-         */
-        async function translatePromptToEnglish(textToTranslate) {
-            const systemPrompt = `You are an expert translator specializing in image generation prompts. 
-Translate the following Indonesian prompt into a highly effective, technical, and natural-sounding ENGLISH prompt.
--   Do NOT add any preamble, explanation, or extra text.
--   Directly output the translated prompt.
--   Ensure technical terms (like '16:9 aspect ratio', 'low-angle shot', 'photorealistic') are correctly formatted in English.
--   Translate "Hal yang dihindari: ..." to "Negative prompt: avoid ...".`;
-            
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: textToTranslate }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-                generationConfig: {
-                    // responseMimeType: "text/plain", // Tidak perlu skema, hanya teks
-                    temperature: 0.1 // Kita ingin terjemahan yang akurat, bukan kreatif
-                }
-            };
-
-            const result = await fetchWithExponentialBackoff(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (result.candidates && result.candidates[0].content.parts[0].text) {
-                return result.candidates[0].content.parts[0].text.trim();
-            } else {
-                throw new Error("Respon terjemahan dari AI tidak valid.");
-            }
-        }
-
-
-        /**
          * Membersihkan semua input dan output
          */
         function clearForm() {
             promptForm.reset(); // Ini akan me-reset semua field di dalam form
-            naturalInput.value = ""; // Bersihkan juga input AI
             outputPrompt.value = "";
-            geminiError.textContent = "";
             outputPrompt.classList.remove('text-red-400');
             copyIcon.classList.remove('hidden');
             checkIcon.classList.add('hidden');
@@ -494,7 +264,6 @@ Translate the following Indonesian prompt into a highly effective, technical, an
             if (!textToCopy) return; // Jangan lakukan apa-apa jika kosong
 
             // Teknik untuk menyalin ke clipboard
-            // Ini berfungsi baik di dalam iframe
             const tempTextArea = document.createElement('textarea');
             tempTextArea.value = textToCopy;
             document.body.appendChild(tempTextArea);
@@ -532,5 +301,6 @@ Translate the following Indonesian prompt into a highly effective, technical, an
     </script>
 </body>
 </html>
+
 
 
